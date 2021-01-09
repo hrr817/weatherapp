@@ -1,15 +1,6 @@
 [[redirects]]
-from = "http://api.positionstack.com/v1/forward/*"
-to = "http://api.positionstack.com/v1/forward/:splat"
-status = 200
-force = true
-[redirects.headers]
-X-From = "Netlify"
-X-Api-Key = "2b1011e78725311333a2054d9789b5e7"
-
-[[redirects]]
-from = "http://api.positionstack.com/v1/reverse/*"
-to = "http://api.positionstack.com/v1/reverse/:splat"
+from = "/v1/*"
+to = "http://api.positionstack.com/v1/:splat"
 status = 200
 force = true
 [redirects.headers]
