@@ -1,0 +1,78 @@
+/* Backgrounds for different weathers */
+body[data-weather='clear-day'] {
+     --Color1: #f0d32f;
+     --Color2: #e7a429;
+     --Color3: #faea09;
+     --Color4: #d1c410;
+     --Color5: #f39112;
+     --BACKGROUND-IMAGE: linear-gradient(120deg, var(--Color1), var(--Color2), var(--Color3), var(--Color4), var(--Color5));
+}
+
+body[data-weather='clear-night'] {
+     --Color1: #1a1818;
+     --Color2: #bbbbbb;
+     --Color3: #726e6e;
+     --Color4: #303030;
+     --Color5: #afafaf;
+     --BACKGROUND-IMAGE: linear-gradient(120deg, var(--Color1), var(--Color2), var(--Color3), var(--Color4), var(--Color5));
+}
+
+body[data-weather='drizzle'] {
+     --Color1: #6ea9bd;
+     --Color2: #64a8c7;
+     --Color3: #4d727e;
+     --Color4: #518da1;
+     --Color5: #5c9bb6;
+     --BACKGROUND-IMAGE: linear-gradient(140deg, var(--Color1), var(--Color2), var(--Color3), var(--Color4), var(--Color5));
+}
+
+
+body[data-weather='rainy'] {
+     --Color1: #8dd3eb;
+     --Color2: #5eb1d8;
+     --Color3: #66c2e0;
+     --Color4: #4dcaf3;
+     --Color5: #7db7cf;
+     --BACKGROUND-IMAGE: linear-gradient(140deg, var(--Color1), var(--Color2), var(--Color3), var(--Color4), var(--Color5));
+}
+
+body[data-weather='snow'] {
+     --Color1: #83969c;
+     --Color2: #afc1c7;
+     --Color3: #90a7af;
+     --Color4: #80959c;
+     --Color5: #ccd6da;
+     --BACKGROUND-IMAGE: linear-gradient(140deg, var(--Color1), var(--Color2), var(--Color3), var(--Color4), var(--Color5));
+}
+
+body[data-weather='cloudy'] {
+     --Color1: #696767;
+     --Color2: #8a7c7c;
+     --Color3: #6e6e6e;
+     --Color4: #b4b4b4;
+     --Color5: #363333;
+     --BACKGROUND-IMAGE: linear-gradient(120deg, var(--Color1), var(--Color2), var(--Color3), var(--Color4), var(--Color5));
+}
+
+body[data-weather='thunderstrom'] {
+     --Color1: #6496ad;
+     --Color2: #dacf42;
+     --Color3: #3d6070;
+     --Color4: #adab38;
+     --Color5: #284866;
+     --BACKGROUND-IMAGE: linear-gradient(90deg, var(--Color1), var(--Color2), var(--Color3), var(--Color4), var(--Color5));
+}
+
+body[data-weather='atmosphere'] {
+     --Color1: #b6b6b6;
+     --Color2: #ebebeb;
+     --Color3: #777777;
+     --Color4: #7f8692;
+     --Color5: #666b70;
+     --BACKGROUND-IMAGE: linear-gradient(170deg, var(--Color1), var(--Color2), var(--Color3), var(--Color4), var(--Color5));
+}
+
+body[data-weather='no-weather-background'] {
+     --BACKGROUND-IMAGE: none;
+}
+
