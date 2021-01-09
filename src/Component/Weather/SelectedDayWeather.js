@@ -19,8 +19,6 @@ const SelectedDayWeather = ({unit, state, dispatchForWindow}) => {
 
      const {date, data} = state;
 
-     console.log(data)
-
      const handleClick = () => {
           dispatchForWindow(windowAction.setDayWeather(false))
           dispatchForWindow(windowAction.setDate(null))
