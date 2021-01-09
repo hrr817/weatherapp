@@ -3,7 +3,7 @@ import {motion} from 'framer-motion';
 import Temperature from './Temperature';
 import { ReactComponent as CloseSVG } from '../../assets/close.svg';
 
-import { toTwelveHourClock, convertUTCTimestamp } from '../../Functions';
+import { toTwelveHourClock } from '../../Functions';
 import { windowAction } from '../../state/useWindow';
 
 const SelectedTimeWeather = ({unit, state, dispatchForWindow}) => {
