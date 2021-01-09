@@ -107,7 +107,7 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                     setUpdating(null);
                     setError({
                          message: `Sorry, we could not find ${place}.`,
-                         duration: 300
+                         duration: 3000
                     });
                     setSearching(false);
                }
