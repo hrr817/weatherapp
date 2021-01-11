@@ -4,7 +4,7 @@ import {AnimatePresence, motion} from 'framer-motion';
 import { toggleUnit } from '../../state/useOptions'
 import { action } from '../../state/useData'
 
-import { getLocationCoord, getCurrentWeather } from '../../Functions'
+import { getLocationCoord, getCurrentWeather, setBackgroundAsWeather } from '../../Functions'
 
 import {ReactComponent as SearchIcon} from '../../assets/search.svg'
 import {ReactComponent as SettingIcon} from '../../assets/settings.svg'
@@ -94,7 +94,7 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                          update: 'Finding location...'
                     });
                     let res = await getLocationCoord(place);
-                    if(res.results) { // Location found
+                    if(res.data.results) { // Location found
                          const { formatted, geometry: {lat, lng} } = res.data.results[0];
                          dispatchForData(action.setLocationData({formatted: formatted}));
 
@@ -103,6 +103,14 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                          });
                          let {data} = await getCurrentWeather(lat, lng, 'metric');
                          dispatchForData(action.setWeatherData(data));
+                         if(data) {
+                         // set background according to weather
+                         const { weather } = data.current;
+                         const id = weather[0].id;
+                         const icon = weather[0].icon;
+                         const time = icon.slice(icon.length - 1, icon.length);
+                         setBackgroundAsWeather(id, time);
+                         } 
                          setUpdating(null);
                          setSearching(false);
                     } else { // No such location found

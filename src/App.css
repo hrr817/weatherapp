@@ -389,7 +389,7 @@ code {
      margin: 0.5em auto;
      background-color: var(--WindowBackgroundColor);
      box-shadow: 0 4px 18px -6px var(--BoxShadowColor);
-     backdrop-filter: blur(15px);
+     backdrop-filter: blur(10px);
      border-radius: 0.8rem;
 }
 
