@@ -35,14 +35,17 @@ const DailyWeather = ({data, dispatchForWindow}) => {
      }
 
      return (
-          <div className="column card" style={{padding: '0 0.5em'}}>
+          <motion.div className="column card" style={{padding: '0 0.5em'}}
+          initial={{opacity: 0, scale: 0}}
+          animate={{opacity: 1, scale: 1}}
+          transition={{type: 'spring', damping: 20, mass: 0.8, bounce: 0 }}>
                <span className="_title"> <span> This Week</span> </span>
                <div className="row scrollbar" style={{overflowX: 'scroll', padding: '0.5rem 0'}}>
                     {
                          [...createDayElementArray()]
                     }
                </div>
-          </div>
+          </motion.div>
      )
 }
 

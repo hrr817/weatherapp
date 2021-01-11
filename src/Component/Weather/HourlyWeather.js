@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import Temperature from './Temperature'
 import { windowAction } from '../../state/useWindow'
 import { toTwelveHourClock, convertUTCTimestamp } from '../../Functions';
@@ -30,14 +31,17 @@ const HourlyWeather = ({unit, data, dispatchForWindow}) => {
      }
      
      return (
-          <div className="column card" style={{padding: '0 0.5em'}}>
+          <motion.div className="column card" style={{padding: '0 0.5em'}}
+          initial={{opacity: 0, scale: 0}}
+          animate={{opacity: 1, scale: 1}}
+          transition={{type: 'spring', damping: 15, mass: 0.8, bounce: 0 }}>
                <span className="_title"> Today </span>
                <div className="row scrollbar" style={{overflowX: 'auto', padding: '0.5rem 0'}}>
                     {
                          [...createHourElements()]
                     }
                </div>
-          </div>
+          </motion.div>
      )
 }
 

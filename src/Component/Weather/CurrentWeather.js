@@ -1,4 +1,5 @@
 import React from 'react';
+import {motion} from 'framer-motion';
 import { convertUTCTimestamp } from '../../Functions';
 
 import { toggleUnit } from '../../state/useOptions'
@@ -15,7 +16,10 @@ const dataWeather = ({unit, location, data, dispatchForOptions}) => {
      }
 
      return (
-          <div className="column">
+          <motion.div className="column"
+          initial={{opacity: 0, y: '-100%'}}
+          animate={{opacity: 1, y: 0}}
+          transition={{type: 'spring', damping: 15, mass: 0.8, bounce: 0 }}>
                <div className="row space-between">
                     <div className="box center" style={{padding: '0em 0em 0.4em 1em'}}>
                          <span className="temperature"> <Temperature temp={data.temp} unit={unit} rounded/> </span>
@@ -29,7 +33,9 @@ const dataWeather = ({unit, location, data, dispatchForOptions}) => {
                          <span className="capitalize"> {data.weather[0].description} </span>
                     </div>
                </div> 
-               <div className="column desc card" style={{padding: '1.5em'}}>
+               <motion.div className="column desc card" style={{padding: '1.5em'}}
+               whileTap={{scale: 0.95}}
+               transition={{type: 'spring', damping: 15, mass: 0.8, bounce: 0 }}>
                     <span> Feels like, it is <Temperature temp={data.feels_like} unit={unit}/> </span>
                     <span> {convertUTCTimestamp(data.dt).toDateString()}, </span>
                     <span style={{display: 'flex', alignItems: 'center', width: '100%'}}> 
@@ -39,8 +45,8 @@ const dataWeather = ({unit, location, data, dispatchForOptions}) => {
                     <div className="row space-between"> <span>Humidity</span> <span>{data.humidity}%</span> </div>
                     <div className="row space-between"> <span>Cloudiness</span> <span>{data.clouds}%</span> </div>
                     <div className="row space-between"> <span>Wind</span> <span>{data.wind_speed} metre/sec</span> </div>
-               </div>
-          </div>
+               </motion.div>
+          </motion.div>
      )
 }
 

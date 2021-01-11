@@ -145,7 +145,10 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                     <div className="loading"></div>
                </div>
           </motion.div> }
-          <div className="bar-container">
+          <motion.div className="bar-container"
+          initial={{opacity: 0, y: '200%'}}
+          animate={{opacity: 1, y: 0}}
+          transition={{type: 'spring', damping: 20, mass: 0.8, bounce: 0 }}>
                <AnimatePresence>
                {showModal && <Modal unit={unit} locations={locations} dispatchForOptions={dispatchForOptions} dispatchForData={dispatchForData}/>}
                </AnimatePresence>
@@ -181,7 +184,7 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                          </AnimatePresence>
                     </span>
                </span>
-          </div> 
+          </motion.div> 
           </>
      )
 }
