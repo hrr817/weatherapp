@@ -4,7 +4,7 @@ import {AnimatePresence, motion} from 'framer-motion';
 import { toggleUnit } from '../../state/useOptions'
 import { action } from '../../state/useData'
 
-import { getCoordPS, getCurrentWeather } from '../../Functions'
+import { getLocationCoord, getCurrentWeather } from '../../Functions'
 
 import {ReactComponent as SearchIcon} from '../../assets/search.svg'
 import {ReactComponent as SettingIcon} from '../../assets/settings.svg'
@@ -93,20 +93,30 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                     setUpdating({
                          update: 'Finding location...'
                     });
-                    let res = await getCoordPS(place);
-                    dispatchForData(action.setLocationData({place: res.data.data[0].county? res.data.data[0].county : res.data.data[0].name, country: res.data.data[0].country}));
+                    let res = await getLocationCoord(place);
+                    if(res.results) { // Location found
+                         const { formatted, geometry: {lat, lng} } = res.data.results[0];
+                         dispatchForData(action.setLocationData({formatted: formatted}));
 
-                    setUpdating({
-                         update: 'Getting weather updates...'
-                    });
-                    let {data} = await getCurrentWeather(res.data.data[0].latitude, res.data.data[0].longitude, 'metric');
-                    dispatchForData(action.setWeatherData(data));
-                    setUpdating(null);
-                    setSearching(false);
+                         setUpdating({
+                              update: 'Getting weather updates...'
+                         });
+                         let {data} = await getCurrentWeather(lat, lng, 'metric');
+                         dispatchForData(action.setWeatherData(data));
+                         setUpdating(null);
+                         setSearching(false);
+                    } else { // No such location found
+                         setUpdating(null);
+                         setSearching(false);
+                         setError({
+                              message: `Sorry, we could not find ${place}.`,
+                              duration: 3000
+                         });
+                    }
                } catch(e){ 
                     setUpdating(null);
                     setError({
-                         message: `Sorry, we could not find ${place}.`,
+                         message: `Something went wrong...`,
                          duration: 3000
                     });
                     setSearching(false);

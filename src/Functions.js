@@ -10,18 +10,18 @@ export const getLocationDB = async () => {
     .catch(e => e);
 }
 
-// Get location information through positionstack
-export const getLocationPS = async(lat, lon) => {
-    return await axios.get(`http://api.positionstack.com/v1/reverse?access_key=${process.env.REACT_APP_POSITION_STACK_API_ACCESS_KEY}&limit=1&query=${lat},${lon}`)
-    .then(res => res.data)
-    .catch(e => e);
-}
-
-// Get location coords through positionstack
-export const getCoordPS = async(place) => {
-    return await axios.get(`http://api.positionstack.com/v1/forward?access_key=${process.env.REACT_APP_POSITION_STACK_API_ACCESS_KEY}&limit=1&query=${place}`)
+// Get location coords through opencagedata
+export const getLocationCoord = async(place) => {
+    return await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${place}&key=${process.env.REACT_APP_OPENCAGEDATA_API_ACCESS_KEY}`)
     .then(res => res)
     .catch(e => e)
+}
+
+// Get location information through opencagedata
+export const getLocation= async(lat, lon) => {
+    return await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${process.env.REACT_APP_OPENCAGEDATA_API_ACCESS_KEY}`)
+    .then(res => res.data)
+    .catch(e => e);
 }
 
 // Get weather data from openweather

@@ -16,7 +16,7 @@ import { useOptions } from './state/useOptions'
 import { useData, action } from './state/useData'
 import { useWindow } from './state/useWindow'
 
-import { getLocationDB, getLocationPS, getCurrentWeather, setBackgroundAsWeather } from './Functions'
+import { getLocationDB, getLocation, getCurrentWeather, setBackgroundAsWeather } from './Functions'
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -56,7 +56,7 @@ function App() {
         try {
           let res = await getLocationDB();
           dispatchForData(action.setLocationData({place: res.city, country: res.country_name}));
-          
+
           let { data } = await getCurrentWeather(res.latitude, res.longitude, 'metric'); 
           dispatchForData(action.setWeatherData(data));
           if(data) {
@@ -97,8 +97,11 @@ function App() {
               // On success
               async({coords}) => { 
                 try {
-                  let res = await getLocationPS(coords.latitude, coords.longitude);
-                  dispatchForData(action.setLocationData({place: res.data[0].county, country: res.data[0].country}));
+                  let res = await getLocation(coords.latitude, coords.longitude);
+                  if(res) {
+                    const { city, county, country } = res.results[0].components;
+                    dispatchForData(action.setLocationData({place: city? city : county, country: country}));
+                  }
 
                   let { data } = await getCurrentWeather(coords.latitude, coords.longitude, 'metric'); 
                   dispatchForData(action.setWeatherData(data));

@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.convertUTCTimestamp = convertUTCTimestamp;
 exports.setBackgroundAsWeather = setBackgroundAsWeather;
-exports.toTwelveHourClock = exports.getCurrentWeather = exports.getCoordPS = exports.getLocationPS = exports.getLocationDB = void 0;
+exports.toTwelveHourClock = exports.getCurrentWeather = exports.getLocation = exports.getLocationCoord = exports.getLocationDB = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // ACCESS KEY FOR WEATHERSTACK API 
 var ACCESS_KEY = process.env.REACT_APP_OPENWEATHER_API_ACCESS_KEY; // For initial start, get location through geolocation-db
@@ -20,9 +20,9 @@ var getLocationDB = function getLocationDB() {
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return regeneratorRuntime.awrap(_axios.default.get('https://geolocation-db.com/json/').then(function (res) {
+          return regeneratorRuntime.awrap(_axios["default"].get('https://geolocation-db.com/json/').then(function (res) {
             return res.data;
-          }).catch(function (e) {
+          })["catch"](function (e) {
             return e;
           }));
 
@@ -35,20 +35,20 @@ var getLocationDB = function getLocationDB() {
       }
     }
   });
-}; // Get location information through positionstack
+}; // Get location coords through opencagedata
 
 
 exports.getLocationDB = getLocationDB;
 
-var getLocationPS = function getLocationPS(lat, lon) {
-  return regeneratorRuntime.async(function getLocationPS$(_context2) {
+var getLocationCoord = function getLocationCoord(place) {
+  return regeneratorRuntime.async(function getLocationCoord$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
           _context2.next = 2;
-          return regeneratorRuntime.awrap(_axios.default.get("http://api.positionstack.com/v1/reverse?access_key=".concat(process.env.REACT_APP_POSITION_STACK_API_ACCESS_KEY, "&limit=1&query=").concat(lat, ",").concat(lon)).then(function (res) {
-            return res.data;
-          }).catch(function (e) {
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.opencagedata.com/geocode/v1/json?q=".concat(place, "&key=").concat(process.env.REACT_APP_OPENCAGEDATA_API_ACCESS_KEY)).then(function (res) {
+            return res;
+          })["catch"](function (e) {
             return e;
           }));
 
@@ -61,20 +61,20 @@ var getLocationPS = function getLocationPS(lat, lon) {
       }
     }
   });
-}; // Get location coords through positionstack
+}; // Get location information through opencagedata
 
 
-exports.getLocationPS = getLocationPS;
+exports.getLocationCoord = getLocationCoord;
 
-var getCoordPS = function getCoordPS(place) {
-  return regeneratorRuntime.async(function getCoordPS$(_context3) {
+var getLocation = function getLocation(lat, lon) {
+  return regeneratorRuntime.async(function getLocation$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
           _context3.next = 2;
-          return regeneratorRuntime.awrap(_axios.default.get("http://api.positionstack.com/v1/forward?access_key=".concat(process.env.REACT_APP_POSITION_STACK_API_ACCESS_KEY, "&limit=1&query=").concat(place)).then(function (res) {
-            return res;
-          }).catch(function (e) {
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.opencagedata.com/geocode/v1/json?q=".concat(lat, "+").concat(lon, "&key=").concat(process.env.REACT_APP_OPENCAGEDATA_API_ACCESS_KEY)).then(function (res) {
+            return res.data;
+          })["catch"](function (e) {
             return e;
           }));
 
@@ -90,7 +90,7 @@ var getCoordPS = function getCoordPS(place) {
 }; // Get weather data from openweather
 
 
-exports.getCoordPS = getCoordPS;
+exports.getLocation = getLocation;
 
 var getCurrentWeather = function getCurrentWeather(lat, lon, unit) {
   return regeneratorRuntime.async(function getCurrentWeather$(_context4) {
@@ -98,9 +98,9 @@ var getCurrentWeather = function getCurrentWeather(lat, lon, unit) {
       switch (_context4.prev = _context4.next) {
         case 0:
           _context4.next = 2;
-          return regeneratorRuntime.awrap(_axios.default.get("https://api.openweathermap.org/data/2.5/onecall?lat=".concat(lat, "&lon=").concat(lon, "&units=").concat(unit, "&appid=").concat(ACCESS_KEY)).then(function (res) {
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.openweathermap.org/data/2.5/onecall?lat=".concat(lat, "&lon=").concat(lon, "&units=").concat(unit, "&appid=").concat(ACCESS_KEY)).then(function (res) {
             return res;
-          }).catch(function (e) {
+          })["catch"](function (e) {
             return e;
           }));
 

@@ -33,7 +33,7 @@ const dataWeather = ({unit, location, data, dispatchForOptions}) => {
                     <span> Feels like, it is <Temperature temp={data.feels_like} unit={unit}/> </span>
                     <span> {convertUTCTimestamp(data.dt).toDateString()}, </span>
                     <span style={{display: 'flex', alignItems: 'center', width: '100%'}}> 
-                              <span> {`${location.place}, ${location.country}`} </span>
+                              <span> {location.formatted? location.formatted : `${location.place}, ${location.country}`} </span>
                               <span className="change-icon" style={{marginLeft: '0.5em'}}> <LocationIcon /> </span>
                     </span> <br/>
                     <div className="row space-between"> <span>Humidity</span> <span>{data.humidity}%</span> </div>

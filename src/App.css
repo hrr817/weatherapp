@@ -6,7 +6,7 @@
      /* App */
      --Width: 100vw;
      --MaxWidth: 1000px;
-     --Height: 100vh;
+     --Height: 100%;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1200px) {
@@ -39,24 +39,24 @@ body::-webkit-scrollbar {
 /* Themes */
 body[data-theme='light'] {
      --TextColor: #0a0a0a;
-     --BackgroundColor: #eff0e5;
+     --BackgroundColor: #cbccc1;
      --TitleColor: #000000fa;
      --DescColor: #242222;
      --ThumbColor: #3f3e3e;
      --WindowBackgroundColor: #fffffa54;
-     --BoxShadowColor: #6b6a6a3a;
+     --BoxShadowColor: #00000050;
      --SVG_FILL_COLOR: #0a0a0a;
 
 }
 
 body[data-theme='dark'] {
      --TextColor: #faf9f3;
-     --BackgroundColor: #3d3a3a;
+     --BackgroundColor: #3a3a3a;
      --TitleColor: #fffffffd;
      --DescColor: #f7f1f1;
      --ThumbColor: #797979;
-     --WindowBackgroundColor: #25232346;
-     --BoxShadowColor: transparent;
+     --WindowBackgroundColor: #25232373;
+     --BoxShadowColor: #0000009f;
      --SVG_FILL_COLOR: #faf9f3e8;
 }
 
@@ -160,8 +160,7 @@ code {
 
 .card {
      background-color: var(--WindowBackgroundColor);
-     box-shadow: 0 6px 10px -6px var(--BoxShadowColor);
-     backdrop-filter: blur(25px);
+     box-shadow: 0 5px 10px -6px var(--BoxShadowColor);
      margin: 0.4em 0.5em;
      padding: 0.4em 0em;
      border-radius: 1em;
@@ -228,11 +227,10 @@ code {
 
 .window-style {
      background-color: var(--WindowBackgroundColor);
-     backdrop-filter: blur(25px);
      border-radius: 1.5em;
      width: 90%;
      max-width: 600px;
-     box-shadow: 0 5px 20px -5px var(--BoxShadowColor);
+     box-shadow: 0 5px 15px -6px var(--BoxShadowColor);
      padding-bottom: 0.6rem;
 }
 
@@ -240,7 +238,6 @@ code {
      cursor: pointer;
      margin-right: 0.4em;
      border-radius: 1.5em;
-
      display: flex;
      justify-content: center;
      align-items: center;
@@ -296,7 +293,7 @@ code {
      padding: 1em 1.2em;
      border-radius: 1.3rem;
      background-color: var(--WindowBackgroundColor);
-     backdrop-filter: blur(25px);
+     backdrop-filter: blur(15px);
      box-shadow: 0 0px 20px -8px var(--BoxShadowColor);
      border: none;
 }
@@ -305,7 +302,7 @@ code {
      cursor: pointer;
      padding: 0.4em 0.6em;
      background-color: var(--WindowBackgroundColor);
-     backdrop-filter: blur(25px);
+     backdrop-filter: blur(10px);
      border-radius: 0.8em;
      transition: transform 0.2s linear;
 }
@@ -324,7 +321,7 @@ code {
      align-items: center;
      background-color: var(--WindowBackgroundColor);
      box-shadow: 0 4px 18px -6px var(--BoxShadowColor);
-     backdrop-filter: blur(25px);
+     backdrop-filter: blur(15px);
      border-radius: 0.8rem;
 }
 
@@ -392,7 +389,7 @@ code {
      margin: 0.5em auto;
      background-color: var(--WindowBackgroundColor);
      box-shadow: 0 4px 18px -6px var(--BoxShadowColor);
-     backdrop-filter: blur(25px);
+     backdrop-filter: blur(15px);
      border-radius: 0.8rem;
 }
 
