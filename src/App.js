@@ -105,6 +105,14 @@ function App() {
 
                   let { data } = await getCurrentWeather(coords.latitude, coords.longitude, 'metric'); 
                   dispatchForData(action.setWeatherData(data));
+                  if(data) {
+                    // set background according to weather
+                    const { weather } = data.current;
+                    const id = weather[0].id;
+                    const icon = weather[0].icon;
+                    const time = icon.slice(icon.length - 1, icon.length);
+                    setBackgroundAsWeather(id, time);
+                  } 
                 } catch(e) {
                   setError({
                     message: "Something went wrong while fetching data...",
