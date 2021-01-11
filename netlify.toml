@@ -1,6 +1,6 @@
 [[redirects]]
 from = "/v1/*"
-to = "http://api.positionstack.com/v1/:splat"
+to = "https://api.positionstack.com/v1/:splat"
 status = 200
 force = true
 [redirects.headers]
