@@ -94,7 +94,8 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                          update: 'Finding location...'
                     });
                     let res = await getLocationCoord(place);
-                    if(res.data.results) { // Location found
+                    console.log(res)
+                    if(res.data.results.length) { // Location found
                          const { formatted, geometry: {lat, lng} } = res.data.results[0];
                          dispatchForData(action.setLocationData({formatted: formatted}));
 
@@ -104,12 +105,12 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                          let {data} = await getCurrentWeather(lat, lng, 'metric');
                          dispatchForData(action.setWeatherData(data));
                          if(data) {
-                         // set background according to weather
-                         const { weather } = data.current;
-                         const id = weather[0].id;
-                         const icon = weather[0].icon;
-                         const time = icon.slice(icon.length - 1, icon.length);
-                         setBackgroundAsWeather(id, time);
+                              // set background according to weather
+                              const { weather } = data.current;
+                              const id = weather[0].id;
+                              const icon = weather[0].icon;
+                              const time = icon.slice(icon.length - 1, icon.length);
+                              setBackgroundAsWeather(id, time);
                          } 
                          setUpdating(null);
                          setSearching(false);
