@@ -94,7 +94,6 @@ const Searchbar = ({ unit, locations, dispatchForOptions, dispatchForData, setEr
                          update: 'Finding location...'
                     });
                     let res = await getLocationCoord(place);
-                    console.log(res)
                     if(res.data.results.length) { // Location found
                          const { formatted, geometry: {lat, lng} } = res.data.results[0];
                          dispatchForData(action.setLocationData({formatted: formatted}));
