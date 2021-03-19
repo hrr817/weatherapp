@@ -17,14 +17,20 @@ const HourlyWeather = ({unit, data, dispatchForWindow}) => {
           for(let i = 0; i < 24; i++){
                let date = convertUTCTimestamp(data[i].dt);
                DOM.push(
-                    <div className="box card" key={data[i].dt} style={{cursor: 'pointer'}} onClick={() => handleClick(date, data[i])}>
+                    <motion.div 
+                         className="box card" 
+                         key={data[i].dt} 
+                         style={{cursor: 'pointer'}} 
+                         onClick={() => handleClick(date, data[i])}
+                         whileHover={{scale: 1.2}}
+                    >
                          <span className="sm"> {toTwelveHourClock(date.getHours()) + ':' + date.getMinutes()} {date.getHours() <= 12? 'AM' : 'PM'}</span>
                          <div className="box center" style={{padding: '0.4em 1em'}}>
                               <img src={`https://openweathermap.org/img/wn/${data[i].weather[0].icon}.png`} alt={data[i].weather[0].main}/>
                               <span className="capitalize sm"> {data[i].weather[0].description} </span>
                          </div>
                          <span className="sm"> <Temperature temp={data[i].temp} unit={unit}/> </span>
-                    </div>
+                    </motion.div>
                )
           }
           return DOM

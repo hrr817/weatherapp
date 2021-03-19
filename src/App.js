@@ -19,7 +19,6 @@ import { useWindow } from './state/useWindow'
 import { getLocationDB, getLocation, getCurrentWeather, setBackgroundAsWeather } from './Functions'
 
 function App() {
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [notification, setNotification] = useState(null);
 
@@ -56,7 +55,6 @@ function App() {
         try {
           let res = await getLocationDB();
           dispatchForData(action.setLocationData({place: res.city, country: res.country_name}));
-
           let { data } = await getCurrentWeather(res.latitude, res.longitude, 'metric'); 
           dispatchForData(action.setWeatherData(data));
           if(data) {
@@ -67,7 +65,6 @@ function App() {
             const time = icon.slice(icon.length - 1, icon.length);
             setBackgroundAsWeather(id, time);
           } 
-          setLoading(false);
         } catch(e) {
             setError({
               message: 'Something went wrong...',
@@ -121,7 +118,7 @@ function App() {
                 }
               }, 
               // On fail
-              res => { 
+              () => { 
                     setError({
                       message: "Something went wrong with locations...",
                       duration: 3000
@@ -155,39 +152,37 @@ function App() {
     }
   }, [locations, dispatchForData])
 
-  // JSX
-  if(!loading) {
-    return (
-      <div className="App">
-        <AnimatePresence>{ notification && <Notification message={notification.message} duration={notification.duration}/>}</AnimatePresence>
-        <Searchbar unit={unit} locations={locations} dispatchForOptions={dispatchForOptions} dispatchForData={dispatchForData} setError={setErrorCallback}/>
-        <CurrentWeather unit={unit} data={weatherData && weatherData.current} location={locationData} dispatchForOptions={dispatchForOptions}/>
-        <HourlyWeather unit={unit} data={weatherData && weatherData.hourly} dispatchForWindow={dispatchForWindow}/>
-        <DailyWeather unit={unit} data={weatherData && weatherData.daily} dispatchForWindow={dispatchForWindow}/>
-        <br/><br/><br/><br/>
-        
-        {/* Conditionally Rendered */}
-        <AnimatePresence>
-        { windowState.showTimeWeather && <SelectedTimeWeather unit={unit} state={windowState} dispatchForWindow={dispatchForWindow}/> } 
-        </AnimatePresence>
+  console.log(weatherData)
 
-        {/* Conditionally Rendered */}
-        <AnimatePresence>
-        { windowState.showDayWeather && <SelectedDayWeather unit={unit} state={windowState} dispatchForWindow={dispatchForWindow}/> } 
-        </AnimatePresence>
-      </div> 
-    )
-  } else {
-    return (
+  if(!weatherData) return (
       <div className="float column">
           <p style={{fontSize: '1.2rem', marginTop: '-2em'}}>Weather App</p>
           <div>
             <div className="loading"></div>
           </div>
       </div>
-    )
-  }
+  )
 
-}
+  return (
+    <div className="App">
+      <AnimatePresence>{ notification && <Notification message={notification.message} duration={notification.duration}/>}</AnimatePresence>
+      <Searchbar unit={unit} locations={locations} dispatchForOptions={dispatchForOptions} dispatchForData={dispatchForData} setError={setErrorCallback}/>
+      <CurrentWeather unit={unit} data={weatherData && weatherData.current} location={locationData} dispatchForOptions={dispatchForOptions}/>
+      <HourlyWeather unit={unit} data={weatherData && weatherData.hourly} dispatchForWindow={dispatchForWindow}/>
+      <DailyWeather unit={unit} data={weatherData && weatherData.daily} dispatchForWindow={dispatchForWindow}/>
+      <br/><br/><br/><br/>
+      
+      {/* Conditionally Rendered */}
+      <AnimatePresence>
+      { windowState.showTimeWeather && <SelectedTimeWeather unit={unit} state={windowState} dispatchForWindow={dispatchForWindow}/> } 
+      </AnimatePresence>
+
+      {/* Conditionally Rendered */}
+      <AnimatePresence>
+      { windowState.showDayWeather && <SelectedDayWeather unit={unit} state={windowState} dispatchForWindow={dispatchForWindow}/> } 
+      </AnimatePresence>
+    </div> 
+  )
+  }
 
 export default App;
