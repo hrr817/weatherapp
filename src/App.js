@@ -16,7 +16,7 @@ import { useOptions } from './state/useOptions'
 import { useData, action } from './state/useData'
 import { useWindow } from './state/useWindow'
 
-import { getLocationDB, getLocation, getCurrentWeather, setBackgroundAsWeather } from './Functions'
+import { getLocationCoord, getLocationDB, getLocation, getCurrentWeather, setBackgroundAsWeather } from './Functions'
 
 function App() {
   const [error, setError] = useState(null);
@@ -134,25 +134,61 @@ function App() {
     } else {
         // Fetch location geolocation-db
         (async() => {
-          // fetch location data
-          let res = await getLocationDB();
-          dispatchForData(action.setLocationData({place: res.city? res.city : 'Somewhere', country: res.country_name}));
-          // fetch weather data
-          let { data } = await getCurrentWeather(res.latitude, res.longitude, 'metric'); 
-          dispatchForData(action.setWeatherData(data));
-          if(data) {
-            // set background according to weather
-            const { weather } = data.current;
-            const id = weather[0].id;
-            const icon = weather[0].icon;
-            const time = icon.slice(icon.length - 1, icon.length);
-            setBackgroundAsWeather(id, time);
-          } 
+          try {
+            // fetch location data
+            let res = await getLocationDB();
+
+            if(res.city === "Not found") {
+              setError({
+                message: "Unable to get locaiton, try entering location manually...",
+                duration: 3000
+              });
+              dispatchForData(action.setLocationData({place: "Delhi", country: "India"}));
+              let res = await getLocationCoord("Delhi");
+              if(res.data.results.length) { // Location found
+                  const { formatted, geometry: {lat, lng} } = res.data.results[0];
+                  dispatchForData(action.setLocationData({formatted: formatted}));
+
+                  let {data} = await getCurrentWeather(lat, lng, 'metric');
+                  dispatchForData(action.setWeatherData(data));
+                  if(data) {
+                      // set background according to weather
+                      const { weather } = data.current;
+                      const id = weather[0].id;
+                      const icon = weather[0].icon;
+                      const time = icon.slice(icon.length - 1, icon.length);
+                      setBackgroundAsWeather(id, time);
+                  } 
+              } else { // No such location found
+                    setError({
+                        message: `Sorry, we could not find...`,
+                        duration: 3000
+                    });
+              }
+            } else {
+              dispatchForData(action.setLocationData({place: res.city? res.city : 'Somewhere', country: res.country_name}));
+
+              // fetch weather data
+              let { data } = await getCurrentWeather(res.latitude, res.longitude, 'metric'); 
+              dispatchForData(action.setWeatherData(data));
+              if(data) {
+                // set background according to weather
+                const { weather } = data.current;
+                const id = weather[0].id;
+                const icon = weather[0].icon;
+                const time = icon.slice(icon.length - 1, icon.length);
+                setBackgroundAsWeather(id, time);
+              } 
+            }
+          } catch(e) {
+            setError({
+              message: "Unable to get locaiton, try entering location manually...",
+              duration: 3000
+            });
+          }
         })();
     }
   }, [locations, dispatchForData])
-
-  console.log(weatherData)
 
   if(!weatherData) return (
       <div className="float column">

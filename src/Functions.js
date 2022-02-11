@@ -6,14 +6,14 @@ const ACCESS_KEY = process.env.REACT_APP_OPENWEATHER_API_ACCESS_KEY;
 // For initial start, get location through geolocation-db
 export const getLocationDB = async () => {
     return await axios.get('https://geolocation-db.com/json/')
-    .then(res => {console.log(res.data); return res.data})
+    .then(res => res.data)
     .catch(e => e);
 }
 
 // Get location coords through opencagedata
 export const getLocationCoord = async(place) => {
     return await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${place}&key=${process.env.REACT_APP_OPENCAGEDATA_API_ACCESS_KEY}`)
-    .then(res => {console.log(res); return res})
+    .then(res => res)
     .catch(e => e)
 }
 
